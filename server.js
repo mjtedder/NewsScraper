@@ -1,13 +1,9 @@
-// Node packages
+// REQUIRED DEPENDENCIES========================================
+require('dotenv').config()
 let express = require('express')
 let exphb = require('express-handlebars')
 let bodyParser = require('body-parser')
 let mongoose = require('mongoose')
-let logger = require('morgan')
-
-// Scraping tools
-let axios = require('axios')
-let cheerio = require('cheerio')
 
 //Require all models
 let db = require('./models')
@@ -17,9 +13,12 @@ let PORT = 8080
 // Initialize express
 let app = express()
 
-// Configure middleware
+// Configure middleware========================================
+
 // Use morgan logger for logging requests
+let logger = require('morgan')
 app.use(logger('dev'))
+
 // Use body-parser for handling form submissions
 app.use(bodyParser.urlencoded({ extended: true}))
 // Use express.static to serve the public folder as a static directory
@@ -33,13 +32,10 @@ let MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/mongoHeadlines
 mongoose.Promise = Promise;
 mongoose.connect(MONGODB_URI);
 
-// A GET route for scraping the news website
+// ROUTING ============================================================
+require('./routes/scrapeRoutes.js')(app)
+require('./routes/viewRoutes.js')(app)
 
-// A route for getting all Articles from the db
-
-// A route for grabbing a specific Article by id, populate it with its comment.
-
-// A route for saving/updating an Article's associated Note
 
 // Start the server
 app.listen(PORT, () => {
