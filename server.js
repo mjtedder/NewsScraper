@@ -34,7 +34,7 @@ mongoose.connect(MONGODB_URI);
 
 // ROUTING ============================================================
 require('./routes/scrapeRoutes.js')(app)
-require('./routes/viewRoutes.js')(app)
+//require('./routes/viewRoutes.js')(app)
 
 
 // Start the server
