@@ -1,4 +1,7 @@
 // DEPENDENCIES===============================================
+// Handles requests
+let request = require('request')
+let bodyParser = require('body-parser')
 // Tells app where to look for models
 let db = require('../models')
 
@@ -6,27 +9,30 @@ let db = require('../models')
 let axios = require('axios')
 let cheerio = require('cheerio')
 
-// A GET route for scraping the Reddit gaming news website
 module.exports = function(app) {
-  app.get('/scrape', (req, res) => {
-    axios.get('https://www.denverpost.com/').then((response) => {
+// A GET route for scraping the Denver Post news website
+  app.get('/scrape', function(req, res) {
+    axios.get('https://www.denverpost.com/').then(function(response) {
       let $ = cheerio.load(response.data)
 
-      $('h4.entry-title').each((i, element) => {
+      $('h4.entry-title').each(function(i, element)
+      {
         let result = {}
 
         result.headline = $(this).children('a.article-title').attr('title')
         result.summary = $('div.article-info').children('div.excerpt').text()
         result.url = $(this).children().attr('href')
-
+        console.log(result)
         db.Article.create(result)
-          .then((dbArticle) => {
+          .then(function(dbArticle)  {
             console.log(dbArticle)
           })
-          .catch((err) => {
+          .catch(function(err) {
             return res.json(err)
           })
       })
+
+
       res.send("Scrape Complete")
     })
   })

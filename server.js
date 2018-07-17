@@ -4,6 +4,7 @@ let express = require('express')
 let exphb = require('express-handlebars')
 let bodyParser = require('body-parser')
 let mongoose = require('mongoose')
+let request = require('request')
 
 //Require all models
 let db = require('./models')
@@ -20,7 +21,7 @@ let logger = require('morgan')
 app.use(logger('dev'))
 
 // Use body-parser for handling form submissions
-app.use(bodyParser.urlencoded({ extended: true}))
+app.use(bodyParser.urlencoded({ extended: false}))
 // Use express.static to serve the public folder as a static directory
 app.use(express.static('public'))
 
@@ -29,15 +30,24 @@ let MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/mongoHeadlines
 
 // Set mongoose to leverage built in JavaScript ES6 Promises
 // Connect to the Mongo DB
-mongoose.Promise = Promise;
 mongoose.connect(MONGODB_URI);
 
 // ROUTING ============================================================
 require('./routes/scrapeRoutes.js')(app)
-//require('./routes/viewRoutes.js')(app)
+require('./routes/viewRoutes.js')(app)
 
 
 // Start the server
 app.listen(PORT, () => {
   console.log("App is running on port " + PORT + "!")
 })
+
+if(process.env.NODE_ENV !== 'production') {
+  process.once('uncaughtException', function(err) {
+    console.error('FATAL: Uncaught exception.');
+    console.error(err.stack||err);
+    setTimeout(function(){
+      process.exit(1);
+    }, 100);
+  });
+}
