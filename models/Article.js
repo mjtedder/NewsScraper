@@ -20,6 +20,11 @@ let ArticleSchema = new Schema({
     type: String,
     required: true
   },
+  // 'saved' is of type boolean
+  saved: {
+    type: Boolean,
+    default: false
+  },
   // 'comment' is an object that stores a comment id
   // The ref property links the ObjectId to the Comment model
   // This allows us to populate the Article with an associated Comment
