@@ -1,23 +1,16 @@
 // DEPENDENCIES====================================================
 // Tell app where to look for mongoDBs
-let db = require('../models')
+var db = require('../models')
 
-module.exports = app => {
-
-// Index page
-  app.get('/', function(req, res) {
-    res.send('Hello World')
-  })
+module.exports = function(app) {
 
 // A route for getting all Articles from the db
-  app.get('/articles', function(req, res) {
-    db.Article.find({})
-      .then(function(dbArticle) {
-        res.json(dbArticle)
-      })
-      .catch(function(err) {
-        res.json(err)
-      })
+  app.get('/', function(req, res) {
+    db.Article.find({}, function(error, data) {
+      if (error) console.log('error getting articles', error)
+      res.render('index', {article: data})
+    })
+
   })
 // A route for grabbing a specific Article by id, populate it with its comment.
   app.get('/articles/:id', function(req,res) {

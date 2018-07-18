@@ -1,18 +1,22 @@
 // REQUIRED DEPENDENCIES========================================
 require('dotenv').config()
-let express = require('express')
-let exphb = require('express-handlebars')
-let bodyParser = require('body-parser')
-let mongoose = require('mongoose')
-let request = require('request')
+const express = require('express')
+const exphbs = require('express-handlebars')
+const bodyParser = require('body-parser')
+const mongoose = require('mongoose')
+const request = require('request')
 
 //Require all models
-let db = require('./models')
+const db = require('./models')
 
-let PORT = 8080
+const PORT = 8080
 
 // Initialize express
-let app = express()
+const app = express()
+
+// Set up the view engine for Handlebars
+app.engine('handlebars', exphbs({ defaultLayout: 'main' }));
+app.set('view engine', 'handlebars');
 
 // Configure middleware========================================
 
@@ -21,9 +25,9 @@ let logger = require('morgan')
 app.use(logger('dev'))
 
 // Use body-parser for handling form submissions
-app.use(bodyParser.urlencoded({ extended: false}))
+app.use(bodyParser.urlencoded({ extended: true }))
 // Use express.static to serve the public folder as a static directory
-app.use(express.static('public'))
+app.use(express.static(__dirname + '/public'));
 
 // If deployed, use the deployed database. Otherwise use the local mongoHeadlines database
 let MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/mongoHeadlines";
