@@ -6,12 +6,14 @@ let ArticleSchema = new Schema({
   // 'headline' is required and of type String
   headline: {
     type: String,
-    required: true
+    required: true,
+    unique: true
   },
   // 'summary' is required and of type String
   summary: {
     type: String,
-    required: true
+    required: true,
+    trim: true
   },
   // 'url' is required and of type String
   url: {
