@@ -1,6 +1,9 @@
 // DEPENDENCIES====================================================
 // Tell app where to look for mongoDBs
-var db = require('../models')
+const db = require('../models')
+const Comment = require('../models/Comment.js')
+var methodOverride = require("method-override")
+
 
 module.exports = function(app) {
 
@@ -16,7 +19,9 @@ module.exports = function(app) {
 
 // This route renders the saved handlebars page
   app.get('/saved', function(req, res) {
-    db.Article.find({saved: true}).populate('comments', 'body').exec(function(err, data) {
+    db.Article.find({saved: true}).populate("comment").exec(function(err, data) {
+      console.log('TEST')
+      console.log(data)
       if (err) {
         res.send(err)
       }
@@ -50,5 +55,21 @@ module.exports = function(app) {
       }
     })
   })
+  // Post route for saving a note to an article
+  app.post('/saved/comments/:id', function(req, res) {
+    db.Comment.create(req.body)
+      .then(function(dbComment) {
+        return db.Article.findOneAndUpdate({_id: req.params.id}, { comment: dbComment._id }, {new: true})
+      })
+        .then(function(dbArticle) {
+            res.redirect('/saved')
+        })
+    })
+  // Delete route to delete a comment
+  app.post('/saved/delete/:id', function(req, res) {
+    db.Comment.remove({_id: req.params.id})
+    .then(function(err, data) {
+        res.redirect('/saved')
+    })
+  })
 }
-// A route for saving/updating an Article's associated Note

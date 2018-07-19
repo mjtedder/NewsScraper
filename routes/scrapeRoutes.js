@@ -20,7 +20,7 @@ module.exports = function(app) {
         var result = {}
 
         result.headline = $(this).children('a.article-title').attr('title')
-        result.summary = $('div.article-info').children('div.excerpt').text()
+        // result.summary = $('div.article-info').children('div.excerpt').text()
         result.url = $(this).children().attr('href')
         console.log(result)
         db.Article.create(result)

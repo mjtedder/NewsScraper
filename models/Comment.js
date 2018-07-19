@@ -5,10 +5,10 @@ let Schema = mongoose.Schema
 
 // Using the Schema constructor, create a new CommentSchema object
 let CommentSchema = new Schema({
-  // 'title' is of type String
-  title: String,
   // 'body' is of type String
-  body: String
+  body: {
+    type: String
+  }
 })
 
 // This creates our model from the above schema, using mongoose's model method

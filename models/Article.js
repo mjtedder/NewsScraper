@@ -12,7 +12,7 @@ let ArticleSchema = new Schema({
   // 'summary' is required and of type String
   summary: {
     type: String,
-    required: true,
+    required: false,
     trim: true
   },
   // 'url' is required and of type String

@@ -5,6 +5,7 @@ const exphbs = require('express-handlebars')
 const bodyParser = require('body-parser')
 const mongoose = require('mongoose')
 const request = require('request')
+const methodOverride = require('method-override')
 
 //Require all models
 const db = require('./models')
@@ -21,7 +22,7 @@ app.set('view engine', 'handlebars');
 // Configure middleware========================================
 
 // Use morgan logger for logging requests
-let logger = require('morgan')
+const logger = require('morgan')
 app.use(logger('dev'))
 
 // Use body-parser for handling form submissions
@@ -37,6 +38,8 @@ let MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/mongoHeadlines
 mongoose.connect(MONGODB_URI);
 
 // ROUTING ============================================================
+// Set up an Express Router
+const router = express.Router()
 require('./routes/scrapeRoutes.js')(app)
 require('./routes/viewRoutes.js')(app)
 

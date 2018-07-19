@@ -30,8 +30,8 @@
       </div>
       <div class="panel-body">
         <a href="{{this.url}}" id="savedLink">{{this.url}}</a>
-        <form class="navbar-form navbar-right" method="POST" action="/delete/{{this.id}}?_method=PUT">
-        <button type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal{{this.id}}" id="addNote">Comments</button>
+        <form class="navbar-form navbar-right" method="POST" action="/delete/{{this._id}}?_method=PUT">
+        <button type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal{{this._id}}" id="addComment">Comments</button>
 
           <button type="submit" class="btn btn-default" id="articleButton">Delete Article</button>
         </form>
@@ -41,8 +41,8 @@
   {{/each}}
 </div>
 {{!-- <!-- Modal --> --}}
-{{#each saved}}
-<div class="modal fade" id="myModal{{this.id}}" role="dialog">
+{{#each saved}} <!--#each saved}} -->
+<div class="modal fade" id="myModal{{this._id}}" role="dialog">
   <div class="modal-dialog">
   {{!-- <!-- Modal content--> --}}
   <div class="modal-content">
@@ -51,12 +51,12 @@
       <h4 class="modal-title">Write a comment</h4>
     </div>
     <div class="modal-body">
-      {{#each this.comments}}
+      {{#each this.comment}}
         <div class="row">
           <div class="panel panel-default">
             <div class="panel-body">
               {{this.body}}
-              <form class="navbar-form navbar-right" method="POST" action="/saved/delete/{{this.id}}?_method=DELETE">
+              <form class="navbar-form navbar-right" method="POST" action="/saved/delete/{{this._id}}?_method=DELETE">
                 <button type="submit" class="btn btn-default">Delete Comment</button>
               </form>
             </div>
@@ -64,10 +64,10 @@
         </div>
       {{/each}}
         <div class="row">
-          <form class="navbar-form navbar-left" action="/saved/notes/{{this.id}}" method="POST">
+          <form class="navbar-form navbar-left" action="/saved/comments/{{this._id}}" method="POST">
             <div class="form-group">
               <label for="apptNotes">Comments</label>
-              <textarea class="form-control" rows="3" id="apptNotes" name="body" placeholder="Notes"></textarea>
+              <textarea class="form-control" rows="3" id="apptNotes" name="body" placeholder="Comments"></textarea>
             </div>
             <button type="submit" class="btn btn-default">Save</button>
           </form>
