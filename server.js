@@ -31,11 +31,29 @@ app.use(bodyParser.urlencoded({ extended: true }))
 app.use(express.static(__dirname + '/public'));
 
 // If deployed, use the deployed database. Otherwise use the local mongoHeadlines database
-let MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/mongoHeadlines";
+//const MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/mongoHeadlines";
 
+var databaseUri = "mongodb://localhost/mongoHeadlines"
+
+if (process.env.MONGODB_URI) {
+  mongoose.connect(process.env.MONGODB_URI)
+} else {
+  mongoose.connect(databaseUri)
+}
+
+var db= mongoose.connection
+
+db.on('error', function(err) {
+  console.log('Mongoose Error: ', err)
+})
+
+db.once('open', function() {
+  console.log('Mongoose Connection Successful.')
+})
 // Set mongoose to leverage built in JavaScript ES6 Promises
 // Connect to the Mongo DB
-mongoose.connect(MONGODB_URI);
+//mongoose.Promise = Promise;
+//);
 
 // ROUTING ============================================================
 // Set up an Express Router
