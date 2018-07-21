@@ -35,13 +35,15 @@ app.use(express.static(__dirname + '/public'));
 
 var databaseUri = "mongodb://localhost/mongoHeadlines"
 
-if (process.env.MONGODB_URI) {
+/*if (process.env.MONGODB_URI) {
   mongoose.connect(process.env.MONGODB_URI)
 } else {
   mongoose.connect(databaseUri)
-}
+}*/
 
-var db= mongoose.connection
+mongoose.connect(mongodb:heroku_cb5zpvf1:1125!Mlab@ds145951.mlab.com:45951/heroku_cb5zpvf1)
+
+var db=mongoose.connection
 
 db.on('error', function(err) {
   console.log('Mongoose Error: ', err)
