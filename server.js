@@ -43,13 +43,13 @@ var databaseUri = "mongodb://localhost/mongoHeadlines"
 
 mongoose.connect('mongodb:heroku_cb5zpvf1:1125!Mlab@ds145951.mlab.com:45951/heroku_cb5zpvf1')
 
-db.on('error', function(err) {
+/* db.on('error', function(err) {
   console.log('Mongoose Error: ', err)
 })
 
 db.once('open', function() {
   console.log('Mongoose Connection Successful.')
-})
+})*/
 // Set mongoose to leverage built in JavaScript ES6 Promises
 // Connect to the Mongo DB
 //mongoose.Promise = Promise;
