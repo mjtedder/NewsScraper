@@ -35,19 +35,31 @@ app.use(express.static(__dirname + '/public'));
 
 var databaseUri = "mongodb://localhost/mongoHeadlines"
 
+if (process.env.MONGODB_URI) {
+  mongoose.connect(process.env.MONGODB_URI)
+} else {
+  mongoose.connect(databaseUri)
+}
+
 /*if (process.env.MONGODB_URI) {
   mongoose.connect(process.env.MONGODB_URI)
 } else {
   mongoose.connect(databaseUri)
 }*/
 
-var mongoDB = "mongodb://heroku_dnkppg85:5og7dn3fgf8c8t49tqql5bk792@ds145911.mlab.com:45911/heroku_dnkppg85";
+//var mongoDB = "mongodb://heroku_dnkppg85:5og7dn3fgf8c8t49tqql5bk792@ds145911.mlab.com:45911/heroku_dnkppg85";
 
-mongoose.connect(mongoDB);
+//mongoose.connect(mongoDB);
 
 var datab = mongoose.connection;
 
-datab.on('error', console.error.bind(console, 'MongoDB connection error:'));
+datab.on('error', function(err) {
+  console.log('Mongoose Error: ', err)
+})
+
+datab.once('open',function() {
+  console.log('Mongoose connection successful.')
+})
 
 // Set mongoose to leverage built in JavaScript ES6 Promises
 // Connect to the Mongo DB
