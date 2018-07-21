@@ -41,7 +41,7 @@ var databaseUri = "mongodb://localhost/mongoHeadlines"
   mongoose.connect(databaseUri)
 }*/
 
-mongoose.connect('mongodb:mjtedder:1125!Mlab@ds145951.mlab.com:45951/heroku_cb5zpvf1')
+mongoose.connect('mongodb://mjtedder:1125!Mlab@ds145951.mlab.com:45951/heroku_cb5zpvf1')
 
 var data=(mongoose.connection)
 
