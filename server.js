@@ -41,20 +41,19 @@ var databaseUri = "mongodb://localhost/mongoHeadlines"
   mongoose.connect(databaseUri)
 }*/
 
-mongoose.connect('mongodb://mjtedder:1125!Mlab@ds145951.mlab.com:45951/heroku_cb5zpvf1')
+var mongoDB = "mongodb://mjtedder:1125!Mlab@ds145951.mlab.com:45951/heroku_cb5zpvf1";
 
-var data=(mongoose.connection)
+mongoose.connect(mongoDB, {
+   useMongoClient: true
+});
 
- data.on('error', function(err) {
-  console.log('Mongoose Error: ', err)
-})
+var datab = mongoose.connection;
 
-data.once('open', function() {
-  console.log('Mongoose Connection Successful.')
-})
+datab.on('error', console.error.bind(console, 'MongoDB connection error:'));
+
 // Set mongoose to leverage built in JavaScript ES6 Promises
 // Connect to the Mongo DB
-mongoose.Promise = Promise;
+//mongoose.Promise = Promise;
 //);
 
 // ROUTING ============================================================
