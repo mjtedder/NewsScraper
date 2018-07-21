@@ -43,8 +43,6 @@ var databaseUri = "mongodb://localhost/mongoHeadlines"
 
 mongoose.connect('mongodb:heroku_cb5zpvf1:1125!Mlab@ds145951.mlab.com:45951/heroku_cb5zpvf1')
 
-var db=mongoose.connection
-
 db.on('error', function(err) {
   console.log('Mongoose Error: ', err)
 })
