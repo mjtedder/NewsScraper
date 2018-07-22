@@ -26,7 +26,7 @@ const logger = require('morgan')
 app.use(logger('dev'))
 
 // Use body-parser for handling form submissions
-app.use(bodyParser.urlencoded({ extended: false }))
+app.use(bodyParser.urlencoded({ extended: true }))
 // Use express.static to serve the public folder as a static directory
 app.use(express.static(__dirname + '/public'));
 
@@ -58,7 +58,7 @@ datab.on('error', function(err) {
 })
 
 datab.once('open',function() {
-  console.log('Mongoose connection successful.')
+  console.log('Mongoose Connection Successful')
 })
 
 // Set mongoose to leverage built in JavaScript ES6 Promises
@@ -74,7 +74,7 @@ require('./routes/viewRoutes.js')(app)
 
 
 // Start the server
-app.listen(PORT, () => {
+app.listen(process.env.PORT || PORT, () => {
   console.log("App is running on port " + PORT + "!")
 })
 
